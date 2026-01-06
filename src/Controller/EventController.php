@@ -40,7 +40,8 @@ class EventController extends AbstractController
     {
         $events = $eventBusiness->getEvents(
             $page ?? 1,
-            $limit ?? 20, $sort,
+            $limit ?? 50,
+            $sort,
             $order,
             $name,
         );
@@ -53,13 +54,13 @@ class EventController extends AbstractController
         EventBusiness $eventBusiness,
         Request $request,
         SerializerInterface $serializer,
-        #[MapUploadedFile] UploadedFile|array $eventImage,
+        #[MapUploadedFile] UploadedFile|null $eventImage,
     ): Response
     {
         $eventDto = $request->request->get('event');
         $eventDto = $serializer->deserialize($eventDto, EventDto::class, 'json');
 
-        $event = $eventBusiness->updateOrCreateEvent(null, $eventDto, !empty($eventImage) ? $eventImage : null);
+        $event = $eventBusiness->updateOrCreateEvent(null, $eventDto, $eventImage);
 
         return $this->json($event, Response::HTTP_CREATED, [], ['groups' => ['event']]);
     }
@@ -70,7 +71,7 @@ class EventController extends AbstractController
         Request $request,
         SerializerInterface $serializer,
         Event $event,
-        #[MapUploadedFile] UploadedFile|array $eventImage,
+        #[MapUploadedFile] UploadedFile|null $eventImage,
     ): Response
     {
         $eventDto = $request->request->get('event');
@@ -88,6 +89,17 @@ class EventController extends AbstractController
     ): Response
     {
         $eventBusiness->deleteEvent($event);
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
+    }
+
+    #[Route('/{event}/image', name: 'delete_image', methods: ['DELETE'])]
+    public function deleteEventImage(
+        EventBusiness $eventBusiness,
+        Event $event
+    ): Response
+    {
+        $eventBusiness->deleteEventImage($event);
 
         return new Response(null, Response::HTTP_NO_CONTENT);
     }

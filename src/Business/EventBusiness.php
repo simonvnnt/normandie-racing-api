@@ -64,8 +64,18 @@ readonly class EventBusiness
         }
 
         $event->setName($eventDto->name);
-        $event->setFromDate(new DateTime($eventDto->fromDate));
-        $event->setToDate(new DateTime($eventDto->toDate));
+
+        $fromDate = $eventDto->fromDate;
+        if (!$fromDate instanceof DateTime) {
+            $fromDate = new DateTime($eventDto->fromDate);
+        }
+        $event->setFromDate($fromDate);
+
+        $toDate = $eventDto->toDate;
+        if (!$toDate instanceof DateTime) {
+            $toDate = new DateTime($eventDto->toDate);
+        }
+        $event->setToDate($toDate);
 
         if ($eventImage !== null) {
             $filename = $this->fileHelper->normalizeFilename($event->getName());
@@ -85,6 +95,15 @@ readonly class EventBusiness
         $this->fileHelper->deleteFile($event->getImagePath());
 
         $this->em->remove($event);
+        $this->em->flush();
+    }
+
+    public function deleteEventImage(Event $event): void
+    {
+        $this->fileHelper->deleteFile($event->getImagePath());
+        $event->setImagePath(null);
+
+        $this->em->persist($event);
         $this->em->flush();
     }
 }
