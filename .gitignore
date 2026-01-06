@@ -25,3 +25,5 @@
 
 .idea/
 .vscode/
+
+/public/events/
