@@ -39,6 +39,7 @@ security:
     access_control:
         - { path: ^/api/register, roles: PUBLIC_ACCESS, methods: [POST] }
         - { path: ^/api/events/current-year, roles: PUBLIC_ACCESS, methods: [GET] }
+        - { path: ^/api/sponsors/public, roles: PUBLIC_ACCESS, methods: [GET] }
         - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
