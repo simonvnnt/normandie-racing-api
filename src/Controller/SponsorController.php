@@ -61,7 +61,7 @@ class SponsorController extends AbstractController
             $hasContract
         );
 
-        return $this->json($sponsors, Response::HTTP_OK, [], ['groups' => ['sponsorship', 'sponsorshipCounterparts', 'sponsorshipCounterpart', 'sponsorshipSponsor', 'sponsor', 'sponsorLinks', 'link', 'linkLinkType', 'linkType']]);
+        return $this->json($sponsors, Response::HTTP_OK, [], ['groups' => ['sponsor', 'sponsorLinks', 'link', 'linkLinkType', 'linkType', 'sponsorSponsorships', 'sponsorship', 'sponsorshipCounterparts', 'sponsorshipCounterpart', 'sponsorshipSponsor']]);
     }
 
     #[Route('', name: 'create', methods: ['POST'])]
@@ -78,7 +78,7 @@ class SponsorController extends AbstractController
 
         $sponsor = $sponsorBusiness->createSponsor($sponsorDto, $sponsorImage, $contractFiles);
 
-        return $this->json($sponsor, Response::HTTP_CREATED, [], ['groups' => ['sponsor', 'sponsorLinks', 'link', 'linkLinkType', 'linkType']]);
+        return $this->json($sponsor, Response::HTTP_CREATED, [], ['groups' => ['sponsor', 'sponsorLinks', 'link', 'linkLinkType', 'linkType', 'sponsorSponsorships', 'sponsorship', 'sponsorshipCounterparts', 'sponsorshipCounterpart', 'sponsorshipSponsor']]);
     }
 
     #[Route('/{sponsor}', name: 'update', methods: ['POST'])]
@@ -96,7 +96,7 @@ class SponsorController extends AbstractController
 
         $sponsor = $sponsorBusiness->updatePersonSponsor($sponsor, $sponsorDto, !empty($sponsorImage) ? $sponsorImage : null, $contractFiles);
 
-        return $this->json($sponsor, Response::HTTP_OK, [], ['groups' => ['sponsor', 'sponsorLinks', 'link', 'linkLinkType', 'linkType']]);
+        return $this->json($sponsor, Response::HTTP_OK, [], ['groups' => ['sponsor', 'sponsorLinks', 'link', 'linkLinkType', 'linkType', 'sponsorSponsorships', 'sponsorship', 'sponsorshipCounterparts', 'sponsorshipCounterpart', 'sponsorshipSponsor']]);
     }
 
     #[Route('/{sponsor}', name: 'delete', methods: ['DELETE'])]

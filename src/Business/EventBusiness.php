@@ -26,7 +26,7 @@ readonly class EventBusiness
     public function getCurrentYearEvents(): array
     {
         $now = new DateTime('now', new DateTimeZone('Europe/Paris'));
-        $currentYear = $now->format('Y');
+        $currentYear = (int)$now->format('Y');
 
         return $this->eventRepository->findByYear($currentYear);
     }

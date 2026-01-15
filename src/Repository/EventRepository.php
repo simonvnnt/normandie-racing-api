@@ -20,10 +20,10 @@ class EventRepository extends ServiceEntityRepository
      * Retrieve events for the specified year (fromDate and toDate within the year)
      * @return Event[]
      */
-    public function findByYear(string $year): array
+    public function findByYear(int $year): array
     {
         return $this->createQueryBuilder('e')
-            ->where('YEAR(e.fromDate) = :year')
+            ->andWhere('YEAR(e.fromDate) = :year')
             ->andWhere('YEAR(e.toDate) = :year')
             ->setParameter('year', $year)
             ->orderBy('e.fromDate', 'ASC')
