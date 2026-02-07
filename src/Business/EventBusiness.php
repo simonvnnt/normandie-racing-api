@@ -63,7 +63,8 @@ readonly class EventBusiness
             $event = new Event();
         }
 
-        $event->setName($eventDto->name);
+        $event->setName($eventDto->name)
+            ->setLink($eventDto->link);
 
         $fromDate = $eventDto->fromDate;
         if (!$fromDate instanceof DateTime) {

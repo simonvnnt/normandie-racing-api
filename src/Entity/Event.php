@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EventRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Attribute\Groups;
 
@@ -30,6 +31,10 @@ class Event
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['event'])]
     private ?string $imagePath = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Groups(['event'])]
+    private ?string $link = null;
 
     public function getId(): ?int
     {
@@ -80,6 +85,18 @@ class Event
     public function setImagePath(?string $imagePath): static
     {
         $this->imagePath = $imagePath;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): static
+    {
+        $this->link = $link;
 
         return $this;
     }
